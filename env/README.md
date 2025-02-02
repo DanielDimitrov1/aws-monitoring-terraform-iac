@@ -1,3 +1,1 @@
-# Following best practices, here we have to have the configurations for all the environments that we will have in our project, such as: testing, staging and production.
-# This will follow up one of the main Terragrunt's principles - DRY (Don't Repeat Yourself).
-#  
+In adherence to best practices, we define configurations for all project environments—including testing, staging, and production—ensuring consistency and maintainability. This approach aligns with one of Terragrunt's core principles: DRY (Don't Repeat Yourself), promoting modularity and reducing redundancy across our infrastructure.
