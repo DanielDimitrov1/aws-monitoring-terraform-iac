@@ -49,13 +49,13 @@ The monitoring setup includes various CloudWatch alarms to track performance, la
 
 ## Database Monitoring (RDS/DynamoDB):
 
-**FreeableMemory** – Monitors low available memory, indicating potential performance degradation.
+***FreeableMemory*** – Monitors low available memory, indicating potential performance degradation.
 
-**CPUUtilization** – Triggers alerts for high CPU usage.
+***CPUUtilization*** – Triggers alerts for high CPU usage.
 
-**FreeStorageSpace** – Monitors available storage over the last 10 minutes.
+***FreeStorageSpace*** – Monitors available storage over the last 10 minutes.
 
-**WriteLatency & ReadLatency** – Tracks database read and write performance.
+***WriteLatency & ReadLatency*** – Tracks database read and write performance.
 
 ## Additional Monitoring Capabilities
 
