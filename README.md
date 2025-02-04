@@ -38,9 +38,13 @@ The monitoring setup includes various CloudWatch alarms to track performance, la
 ## API Gateway Monitoring:
 
 **ApiGatewayLatencyAlarm** – Monitors API latency.
+
 **ApiGateway4xxErrorAlarm** – Tracks 4xx client errors.
+
 **ApiGateway5xxErrorAlarm** – Tracks 5xx server errors.
+
 **Latency** - The time between API Gateway receives a request from a client and when it returns a response back.
+
 **Count** - Total amount of API requests for a given period.
 
 ## Database Monitoring (RDS/DynamoDB):
@@ -67,3 +71,13 @@ Beyond the listed metrics, I can extend monitoring configurations to cover addit
 **Cost Optimization:** Detects inefficient resource usage and potential cost savings.
 
 **Security & Compliance:** Monitors unauthorized access attempts and suspicious activities.
+
+
+
+# About Me
+
+I am passionate about **Infrastructure as Code, AWS, and cloud monitoring**. This repository demonstrates my ability to implement **scalable, modular, and efficient AWS monitoring solutions** using **Terraform and Terragrunt.**
+
+If you're interested in similar implementations or need custom AWS monitoring solutions, feel free to reach out!
+
+**✅ Let’s make cloud monitoring simple, automated, and efficient!**
