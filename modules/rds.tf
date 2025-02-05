@@ -15,3 +15,24 @@ resource "aws_cloudwatch_metric_alarm" "rds_memory_low" {
     DBInstanceIdentifier = var.rds_identifier
   }
 }
+
+# Here we can add more metric alarms, such as:
+# - WriteThroughput
+# - WriteLatency
+# - WriteOPS
+# - SwapUsage
+# - ReplicationSlotDiskUsage
+# - TransactionLogsDiskUsage
+# - DBLoadCPU
+# - DatabaseConnections
+# - CPUUtilization
+# - EBSIOBalance%
+# - DiskQueueDepth
+# - NumberOfRecoveryPointsDeleting
+# - NumberOfBackupJobsCreated
+# - NumberOfBackupJobsCompleted
+# - NumberOfBackupJobsRunning
+# - ConfigurationItemsRecorded
+# - ConfigurationRecorderInsufficientPermissionsFailure
+# - IncomingBytes
+# - IncomingLogEvents

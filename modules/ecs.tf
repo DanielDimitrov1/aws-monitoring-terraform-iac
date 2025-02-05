@@ -38,3 +38,13 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_higher_than_expected" {
   treat_missing_data = "notBreaching"
   dimensions = {ServiceName = each.value,ClusterName= var.cluster_name}
 }
+
+# Here we can add more metric alarms, such as: 
+# - DeploymentCount
+# - RunningTaskCount
+# - DesiredTaskCount
+# - CpuUtilized
+# - MemoryUtilized
+# - EphemeralStorageUtilized
+# - StorageWriteBytes
+# - etc, etc, etc.
