@@ -37,11 +37,11 @@ sts_authentication() {
   AWS_SECRET_ACCESS_KEY=$(cat ${AWS_STS_CREDENTIALS_FILE} | jq -r '.Credentials.SecretAccessKey')
   AWS_SESSION_TOKEN=$(cat ${AWS_STS_CREDENTIALS_FILE} | jq -r '.Credentials.SessionToken') 
   export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-  export AWS_SECRET_ACCESS_KEY-${AWS_SECRET_ACCESS_KEY} 
+  export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} 
   export AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
 }
 
-setup_authentication () {
+setup_authentication() {
 
   AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:?'AWS_DEFAULT_REGION variable missing.'}
   AWS_OIDC_ROLE_ARN=${1:?'OIDC role ARN argument missing.'}
@@ -61,7 +61,7 @@ setup_authentication () {
 
 # Export variables to AWS credentials file as default profile#
   mkdir -p ~/.aws
-  cat <<EOF › ~/.aws/credentials
+  cat <<EOF > ~/.aws/credentials
 [default]
 aws_access_key_id = ${AWS_ACCESS_KEY_ID}
 aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
