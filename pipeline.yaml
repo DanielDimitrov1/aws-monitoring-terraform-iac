@@ -1,0 +1,91 @@
+image: hashicorp/terraform:1.6.2
+pipelines:
+  branches:
+    testing:
+      - step:
+          oidc: true
+          name: "Runing pipeline for Testing"
+          script:
+            - echo "Running pipeline"
+            - apk --no-cache add python3 py-pip jq; pip3 install --upgrade pip; pip3 install --no-cache-dir awscli
+            - wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.53.2/terragrunt/releases/download/v0.53.2/terragrunt_linux_amd64
+            - mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
+            - chmod +x /usr/local/bin/terragrunt
+            - export +x /usr/local/bin/terragrunt
+            - sh scripts/setup_authentication.sh 'arn:aws:iam:XXXXXX:role/ROLE_NAME'
+            - terragrunt init --terragrunt-working-dir env/testing/eu-west-1
+            - terragrunt plan --terragrunt-working-dir env/testing/eu-west-1
+    staging:
+      - step:
+          oidc: true
+          name: "Runing pipeline for Staging"
+            - echo "Running pipeline"
+            - apk --no-cache add python3 py-pip jq; pip3 install --upgrade pip; pip3 install --no-cache-dir awscli
+            - wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.53.2/terragrunt/releases/download/v0.53.2/terragrunt_linux_amd64
+            - mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
+            - chmod +x /usr/local/bin/terragrunt
+            - export +x /usr/local/bin/terragrunt
+            - sh scripts/setup_authentication.sh 'arn:aws:iam:XXXXXX:role/ROLE_NAME'
+            - terragrunt init --terragrunt-working-dir env/staging/eu-west-1
+            - terragrunt plan --terragrunt-working-dir env/staging/eu-west-1
+  custom:
+    build-with-parameters:
+      - variables:
+          - name: ACTION
+            description: Action to take 
+            default: plan 
+            allowed-values:
+            - plan
+            - apply
+          - name: ENV
+            description: Environment to deploy 
+            default: staging 
+            allowed-values:
+              - staging
+              - testing
+              - production
+          - name: AWS REGION
+            description: AWS region 
+            default: eu-west-1
+            allowed-values:
+              - eu-west-1
+          - name: ENVIRONMENT_DIRECTORY
+            description: Staging directory 
+            default: env/staging
+            allowed-values:
+              - env/staging
+              - env/testing
+              - env/production
+      - step:
+          oide: true
+          name: "Setup and Provision environment" 
+          script:
+          - apk --no-cache add python py3-pip j; pip install --upgrade pip; pips install --no-cache-dir awscli
+          - wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.53.2/terragrunt linux amd64
+          - mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
+          - chmod +x /usr/local/bin/terragrunt
+          - >
+            case $ENV 
+              in staging)
+                sh scripts/setup_authentication.sh 'arn:aws: iam:: XXXXXXXX:role/ROLE_NAME-cicd-iac-aws-oidc-staging'
+                ;;
+              testing)
+                sh scripts/setup_authentication.sh 'arn:aws: iam:: XXXXXXXX:role/ROLE_NAME-cicd-iac-aws-oidc-testing'
+                ;;
+              production)
+                sh scripts/setup_authentication.sh 'arn:aws: iam:: XXXXXXXX:role/ROLE_NAME-cicd-iac-aws-oidc-prod'
+                ;;            
+              *)
+                echo "Invalid AWS account specified"
+                exit 1
+                ;;
+            esac
+          - cat ~/ .aws/config
+          - terragrunt init --terragrunt-working-dir $BITBUCKET_CLONE_DIR/#ENVIRONMENT_DIRECTORY/$AWS_REGION
+          - terragrunt plan -terragrunt-working-dir $BITBUCKET_CLONE_DIR/$ENVIRONMENT_ DIRECTORY/SAWS_REGION
+          - >
+            if [ $ACTION == 'apply' ]; then
+              terragrunt apply -terragrunt-working-dir $BITBUCKET_CLONE_DIR/$ENVIRONMENT_DIRECTORY/SAWS_REGION
+            else
+              echo 'skipping apply due to action -> $ACTION'
+            fi
