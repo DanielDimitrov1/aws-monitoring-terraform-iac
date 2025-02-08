@@ -71,7 +71,6 @@ jobs:
 
       - name: Terraform Init
         run: |
-          # terragrunt init --terragrunt-working-dir ${{ github.workspace }}/${{ inputs.ENVIRONMENT_DIRECTORY }}/${{ inputs.AWS_REGION }}
           terragrunt init --terragrunt-working-dir env/testing/terragrunt.hcl
 
       - name: Terraform Plan
