@@ -63,7 +63,7 @@ jobs:
         run: |
           case "${{ github.ref_name }}" in
             testing)
-              sh scripts/setup_authentication.sh 'arn:aws:iam::277707138850:role/cicd-aws-oidc'
+              sh scripts/setup_authentication.sh '${{ secrets.AWS_TESTING_ROLE }}'
               ;;
             staging)
               sh scripts/setup_authentication.sh 'arn:aws:iam::XXXXXX:role/ROLE_NAME-cicd-iac-aws-oidc-staging'
