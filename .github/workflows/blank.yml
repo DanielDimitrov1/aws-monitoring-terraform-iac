@@ -15,6 +15,7 @@ on:
         options:
           - plan
           - apply
+          - production
       ENV:
         description: 'Environment to deploy'
         required: true
@@ -62,7 +63,7 @@ jobs:
         run: |
           case "${{ github.ref_name }}" in
             testing)
-              sh scripts/setup_authentication.sh 'arn:aws:iam::XXXXXX:role/ROLE_NAME-cicd-iac-aws-oidc-testing'
+              sh scripts/setup_authentication.sh 'arn:aws:iam::277707138850:role/cicd-aws-oidc'
               ;;
             staging)
               sh scripts/setup_authentication.sh 'arn:aws:iam::XXXXXX:role/ROLE_NAME-cicd-iac-aws-oidc-staging'
