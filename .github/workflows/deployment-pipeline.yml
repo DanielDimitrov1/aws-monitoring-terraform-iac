@@ -71,8 +71,8 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terragrunt init --terragrunt-working-dir ${{ github.workspace }}/${{ inputs.ENVIRONMENT_DIRECTORY }}/${{ inputs.AWS_REGION }}
-          # terragrunt init --terragrunt-working-dir ${{ github.workspace }}/env/staging/eu-west-1
+          # terragrunt init --terragrunt-working-dir ${{ github.workspace }}/${{ inputs.ENVIRONMENT_DIRECTORY }}/${{ inputs.AWS_REGION }}
+          terragrunt init --terragrunt-working-dir ${{ github.workspace }}/env/testing/
 
       - name: Terraform Plan
         run: |
