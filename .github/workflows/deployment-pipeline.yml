@@ -59,13 +59,20 @@ jobs:
           mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
           chmod +x /usr/local/bin/terragrunt
 
-      - name: Setup Authentication
-        run: |
-          sh scripts/setup_authentication.sh '${{ secrets.AWS_TESTING_ROLE }}'
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Verify AWS Authentication
+        run: aws sts get-caller-identity  # Check if authentication is successful
 
       - name: Terraform Init
         run: |
           terragrunt init --terragrunt-working-dir ${{ github.workspace }}/${{ inputs.ENVIRONMENT_DIRECTORY }}/${{ inputs.AWS_REGION }}
+          # terragrunt init --terragrunt-working-dir ${{ github.workspace }}/env/staging/eu-west-1
 
       - name: Terraform Plan
         run: |
