@@ -10,16 +10,16 @@ on:
       ACTION:
         description: 'Action to take'
         required: true
-        default: 'plan'
+        default: 'init'
         type: choice
         options:
+          - init
           - plan
           - apply
-          - production
       ENV:
         description: 'Environment to deploy'
         required: true
-        default: 'staging'
+        default: 'testing'
         type: choice
         options:
           - staging
@@ -35,7 +35,7 @@ on:
       ENVIRONMENT_DIRECTORY:
         description: 'Environment directory'
         required: true
-        default: 'env/staging'
+        default: 'env/testing'
         type: choice
         options:
           - env/staging
