@@ -1,4 +1,4 @@
 include {
-    path = find_in_parent_folders("/Monitoring_AWS_Terrafrom")
+    path = find_in_parent_folders()
     expose = true
 }
