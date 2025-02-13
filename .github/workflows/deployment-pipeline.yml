@@ -52,9 +52,7 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terragrunt init --terragrunt-non-interactive
-        env:
-          env/testing/terragrunt.hcl
+          terragrunt init --terragrunt-non-interactive --terragrunt-working-dir env/testing
 
       - name: Terraform Plan
         run: |
