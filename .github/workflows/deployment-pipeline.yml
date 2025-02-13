@@ -4,50 +4,30 @@ on:
   push:
     branches:
       - main
-      - staging
-  workflow_dispatch:
-    inputs:
-      ACTION:
-        description: 'Action to take'
-        required: true
-        default: 'init'
-        type: choice
-        options:
-          - init
-          - plan
-          - apply
-      ENV:
-        description: 'Environment to deploy'
-        required: true
-        default: 'testing'
-        type: choice
-        options:
-          - staging
-          - testing
-          - production
-      AWS_REGION:
-        description: 'AWS region'
-        required: true
-        default: 'eu-west-1'
-        type: choice
-        options:
-          - eu-west-1
-      ENVIRONMENT_DIRECTORY:
-        description: 'Environment directory'
-        required: true
-        default: 'env/testing'
-        type: choice
-        options:
-          - env/staging
-          - env/testing
-          - env/production
 
 jobs:
-  terraform:
+  Terragrunt:
+    name: 'Terragrunt'
     runs-on: ubuntu-latest
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
+      # Install the latest version of Terragrunt CLI and configure the Terragrunt CLI configuration file with a Terragrunt Cloud user API token
+      - name: Setup Terraform v1.2.6
+        uses: hashicorp/setup-Terraform@v1
+        with:
+          terraform_version: 1.2.6
+          terraform_wrapper: true
+      - name: Setup Terraform version
+        run: terraform --version
+      - name: Setup Terraform wrapper path
+        run: which terraform
 
       - name: Install Dependencies
         run: |
@@ -71,7 +51,9 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terragrunt init --terragrunt-working-dir env/testing/terragrunt.hcl
+          terragrunt init --terragrunt-non-interactive
+        env:
+          env/testing/terragrunt.hcl
 
       - name: Terraform Plan
         run: |
