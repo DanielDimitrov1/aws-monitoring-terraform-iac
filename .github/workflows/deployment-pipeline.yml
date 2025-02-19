@@ -30,11 +30,7 @@ jobs:
         uses: hashicorp/setup-Terraform@v1
         with:
           terraform_version: 1.10.5
-          terraform_wrapper: true
-      - name: Setup Terraform version
-        run: terraform --version
-      - name: Setup Terraform wrapper path
-        run: which terraform
+          terraform_wrapper: false
 
       - name: Install Dependencies
         run: |
