@@ -53,27 +53,20 @@ jobs:
       - name: Verify AWS Authentication
         run: aws sts get-caller-identity  # Check if authentication is successful
 
-      - name: Debug AWS Credentials
-        run: |
-          echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
-          echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
-          aws sts get-caller-identity
-
-
-      - name: Export AWS Credentials
-        run: |
-          export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
-          export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-          export AWS_REGION="eu-west-1"
-
-
-      # - name: Set AWS Profile
+      # - name: Debug AWS Credentials
       #   run: |
-      #     export AWS_PROFILE=default
-      #     aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-      #     aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-      #     aws configure set region "$AWS_REGION"
+      #     echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
+      #     echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}"
       #     aws sts get-caller-identity
+
+
+      # - name: Export AWS Credentials
+      #   run: |
+      #     export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
+      #     export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+      #     export AWS_REGION="eu-west-1"
+
+
 
       - name: Terragrun Init
         run: |
