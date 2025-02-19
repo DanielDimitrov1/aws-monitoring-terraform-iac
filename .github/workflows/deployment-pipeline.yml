@@ -10,6 +10,10 @@ env:
   AWS_REGION: "eu-west-1"
 #  AWS_ACCOUNT_ID:
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: eu-west-1
 
 jobs:
   Terragrunt:
@@ -57,9 +61,9 @@ jobs:
 
       - name: Terragrunt Plan
         run: |
-          terragrunt plan --terragrunt-working-dir ${{ github.workspace }}/${{ inputs.ENVIRONMENT_DIRECTORY }}/${{ inputs.AWS_REGION }}
+          terragrunt plan --terragrunt-non-interactive --terragrunt-working-dir env/testing
 
       - name: Terragrunt Apply (if applicable)
         if: ${{ inputs.ACTION == 'apply' }}
         run: |
-          terragrunt apply --terragrunt-working-dir ${{ github.workspace }}/${{ inputs.ENVIRONMENT_DIRECTORY }}/${{ inputs.AWS_REGION }}
+          terragrunt apply --terragrunt-non-interactive --terragrunt-working-dir env/testing
