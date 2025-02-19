@@ -22,7 +22,9 @@ terraform {
         commands = ["init"]
         arguments = [
             "-input=false", "-compact-warnings", "-var-file=${get_original_terragrunt_dir()}/${local.tf_vars_file}",
-            "-out=${local.env}.tfplan"
+            "-out=${local.env}.tfplan", 
+            "-reconfigure", 
+            "-upgrade"
         ]
     }
 
@@ -50,7 +52,7 @@ terraform {
 
 generate "provider" {
     path = "providers.tf"
-    if_exists = "overwrite"
+    if_exists = "overwrite_terragrunt"
     contents = <<EOF
       provider "aws" {
         region = "eu-west-1"
@@ -62,7 +64,7 @@ generate "provider" {
 
 generate "required_providers" {
   path = "required_providers.tf"
-  if_exists = "overwrite"
+  if_exists = "overwrite_terragrunt"
   contents = <<EOF
     terraform {
         required_providers {
