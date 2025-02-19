@@ -18,6 +18,14 @@ terraform {
         ]
     }
 
+    extra_arguments "reconfigure" {
+        commands = ["init"]
+        arguments = [
+            "-input=false", "-compact-warnings", "-var-file=${get_original_terragrunt_dir()}/${local.tf_vars_file}",
+            "-out=${local.env}.tfplan"
+        ]
+    }
+
     extra_arguments "auto_plan" {
         commands = ["plan"]
         arguments = [

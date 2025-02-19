@@ -50,6 +50,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-1
 
+
       - name: Verify AWS Authentication
         run: aws sts get-caller-identity  # Check if authentication is successful
 
@@ -68,9 +69,9 @@ jobs:
 
 
 
-      - name: Terragrun Init
-        run: |
-          terragrunt init --terragrunt-non-interactive --terragrunt-working-dir env/testing
+      # - name: Terragrun Init
+      #   run: |
+      #     terragrunt init --terragrunt-non-interactive --terragrunt-working-dir env/testing
 
       - name: Terragrunt Plan
         run: |
