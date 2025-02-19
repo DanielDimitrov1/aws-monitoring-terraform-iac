@@ -46,7 +46,7 @@ generate "provider" {
     contents = <<EOF
       provider "aws" {
         region = "eu-west-1"
-        profile = "default"
+        profile = "${local.env}"
       }
     EOF
 }
@@ -79,5 +79,6 @@ remote_state {
         key     = "${path_relative_to_include()}/terraform.tfstate"
         region  = local.region
         dynamodb_table = "remote-lock-file"
+        profile = "${local.env}"
     }
 }
