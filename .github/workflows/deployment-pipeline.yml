@@ -26,10 +26,10 @@ jobs:
         with:
           fetch-depth: 0 
       # Install the latest version of Terragrunt CLI and configure the Terragrunt CLI configuration file with a Terragrunt Cloud user API token
-      - name: Setup Terraform v1.2.6
+      - name: Setup Terraform v1.10.5
         uses: hashicorp/setup-Terraform@v1
         with:
-          terraform_version: 1.2.6
+          terraform_version: 1.10.5
           terraform_wrapper: true
       - name: Setup Terraform version
         run: terraform --version
