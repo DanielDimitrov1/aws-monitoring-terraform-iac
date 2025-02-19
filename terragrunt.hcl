@@ -7,7 +7,6 @@ locals {
 inputs = {
     env     = local.env
     region  = local.region
-    profile = "default"
 }
 
 terraform {
@@ -35,7 +34,8 @@ terraform {
     extra_argument "auto_destroy" {
         commands = ["destroy"]
         arguments = [
-            "-input=false", "-compact-warnings", "-auto-approve", "-var-file=${get_original_terragrunt_dir()}/${local.tf_vars_file}"
+            "-input=false", "-compact-warnings", "-auto-approve", 
+            "-var-file=${get_original_terragrunt_dir()}/${local.tf_vars_file}"
         ]
     }
 }
@@ -60,7 +60,7 @@ generate "required_providers" {
         required_providers {
             aws = {
                 source = "hashicorp/aws"
-                version = "=1.10.5"
+                version = "=5.38.0"
             }
         }
     }
@@ -76,7 +76,7 @@ remote_state {
     config = {
         encrypt = true
         bucket  = "daniel-monitoring-s3-tfstate-${local.env}"
-        key     = "${path_relative_to_include()}/terraform.tfstate}"
+        key     = "${path_relative_to_include()}/terraform.tfstate"
         region  = local.region
         dynamodb_table = "remote-lock-file"
     }
