@@ -6,6 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+env: 
+  AWS_REGION: "eu-west-1"
+#  AWS_ACCOUNT_ID:
+
+
 jobs:
   Terragrunt:
     name: 'Terragrunt'
