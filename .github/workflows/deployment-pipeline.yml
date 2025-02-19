@@ -51,21 +51,15 @@ jobs:
 
       - name: Verify AWS Authentication
         run: aws sts get-caller-identity  # Check if authentication is successful
-      - name: Debug Directory Structure
+      - name: Terragrun Init
         run: |
-          pwd
-          ls -R
-
-      - name: Terraform Init
-        run: |
-          ls -l env/testing/ 
           terragrunt init --terragrunt-non-interactive --terragrunt-working-dir env/testing
 
-      - name: Terraform Plan
+      - name: Terragrunt Plan
         run: |
           terragrunt plan --terragrunt-working-dir ${{ github.workspace }}/${{ inputs.ENVIRONMENT_DIRECTORY }}/${{ inputs.AWS_REGION }}
 
-      - name: Terraform Apply (if applicable)
+      - name: Terragrunt Apply (if applicable)
         if: ${{ inputs.ACTION == 'apply' }}
         run: |
           terragrunt apply --terragrunt-working-dir ${{ github.workspace }}/${{ inputs.ENVIRONMENT_DIRECTORY }}/${{ inputs.AWS_REGION }}
