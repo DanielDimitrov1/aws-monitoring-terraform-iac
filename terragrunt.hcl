@@ -11,27 +11,27 @@ inputs = {
 
 terraform {
     source = "../../..//."
-    extra_argument "retry_lock" {
+    extra_arguments "retry_lock" {
         commands = get_terraform_commands_that_need_locking()
         arguments = [
             "-lock-timeout=20m"
         ]
     }
 
-    extra_argument "auto_plan" {
+    extra_arguments "auto_plan" {
         commands = ["plan"]
         arguments = [
             "-input=false", "-compact-warnings", "-var-file=${get_original_terragrunt_dir()}/${local.tf_vars_file}",
             "-out=${local.env}.tfplan"
         ]
     }
-    extra_argument "auto_approve" {
+    extra_arguments "auto_approve" {
         commands = ["apply"]
         arguments = [
             "-input=false", "-compact-warnings", "-auto-approve", "${local.env}.tfplan"
         ]
     }
-    extra_argument "auto_destroy" {
+    extra_arguments "auto_destroy" {
         commands = ["destroy"]
         arguments = [
             "-input=false", "-compact-warnings", "-auto-approve", 
