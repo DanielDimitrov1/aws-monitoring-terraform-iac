@@ -18,7 +18,7 @@ terraform {
         ]
     }
 
-    extra_arguments "reconfigure" {
+    extra_arguments "auto_init" {
         commands = ["init"]
         arguments = [
             "-input=false", "-compact-warnings", "-var-file=${get_original_terragrunt_dir()}/${local.tf_vars_file}",
