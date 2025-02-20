@@ -64,7 +64,7 @@ generate "provider" {
 
 generate "required_providers" {
   path = "required_providers.tf"
-  if_exists = "overwrite_terragrunt"
+  if_exists = "overwrite"
   contents = <<EOF
     terraform {
         required_providers {
@@ -84,11 +84,11 @@ remote_state {
       if_exists = "overwrite_terragrunt"
     }
     config = {
-        encrypt = true
-        bucket  = "daniel-monitoring-s3-tfstate-${local.env}"
-        key     = "${path_relative_to_include()}/terraform.tfstate"
-        region  = local.region
-        dynamodb_table = "remote-lock-file"
-        profile = "${local.env}"
+        encrypt         = true
+        bucket          = "daniel-monitoring-s3-tfstate-${local.env}"
+        key             = "${path_relative_to_include()}/terraform.tfstate"
+        region          = local.region
+        dynamodb_table  = "remote-lock-file"
+        profile         = "${local.env}"
     }
 }
