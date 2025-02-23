@@ -8,8 +8,12 @@ I strongly recommend using Terragrunt because of its efficiency.
 
 Additionally, this repo includes a deployment pipeline for Bitbucket called [pipeline.yaml](https://github.com/DanielDimitrov1/Monitoring_AWS_Terrafrom/blob/main/pipeline.yaml), in addition to GitHub Actions, providing flexibility in CI/CD setup.
 
+***The authentication approach to AWS*** in this setup differs from the standard  method of storing the ACCESS_KEY and SECRET_ACCESS_KEY as environment secrets in GitHub repository settings.
 
-The current setup focuses on monitoring key AWS services, ensuring scalability, modularity, and maintainability. This is a simple way of implementing monitoring, but I can enhance it using **for_each loops, if statements, and other Terraform features** to provide more flexibility and customization as needed.
+Instead, I have defined an **AWS Identity provider** with strictly enforced policies and permissions, following to the principle of least privilege. ***This approach significantly improves security compared to the traditional and commonly used method.***
+
+
+The current setup focuses on monitoring key AWS services, ensuring scalability, modularity, and maintainability. I can easily enhance it using **for_each loops, if statements, and other Terraform features** to provide more flexibility and customization as needed.
 
 
 ## Getting Started
