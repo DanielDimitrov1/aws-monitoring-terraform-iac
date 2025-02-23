@@ -46,16 +46,11 @@ Retrieve your Load Balancer ARN and store it in the repository's environment sec
 
 ## Notes
 
-Some configuration files and examples are included to illustrate real-world use cases. However, certain resources and services may not be pre-configured since they depend on specific monitoring needs.
+***Some configuration files and examples are included to illustrate real-world use cases. However, certain resources and services may not be pre-configured since they depend on specific monitoring needs.***
 
 ## Support
 
-For any questions or further assistance, feel free to reach out.
-
-
-
-
-
+***For any questions or further assistance, feel free to reach out.***
 
 
 
