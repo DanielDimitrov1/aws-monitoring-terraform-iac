@@ -1,69 +1,102 @@
-name: Terraform CI/CD
-
+name: "Terraform action"
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      ACTION:
-        description: 'Terragrunt Action (plan/apply)'
-        required: true
-        default: 'plan'
-
+  pull_request:
+permissions:
+      id-token: write # This is required for aws oidc connection
+      contents: read # This is required for actions/checkout
+      pull-requests: write # This is required for gh bot to comment PR
 env:
-  AWS_REGION: eu-west-1
-
+  TF_LOG: INFO
+  AWS_REGION: ${{ secrets.AWS_REGION }}
 jobs:
-  Terragrunt:
-    name: 'Terragrunt'
+  deploy:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         shell: bash
-
+        working-directory: .
     steps:
-      - name: Checkout Repository
+      - name: Git checkout
         uses: actions/checkout@v3
+
+      - name: Configure AWS credentials from AWS account
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          fetch-depth: 0 
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-session-name: GitHub-OIDC-TERRAFORM
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.10.5
-          terraform_wrapper: false
+          terraform_version: 1.2.5
 
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3 python3-pip jq
-          pip3 install --upgrade pip
-          pip3 install --no-cache-dir awscli
-          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.53.2/terragrunt_linux_amd64
-          mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
-          chmod +x /usr/local/bin/terragrunt
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
+      - name: Terraform Init
+        id: init
+        env:
+          AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+          AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }}
+        run: terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}"
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+
+      - uses: actions/github-script@v6
+        if: github.event_name == 'pull_request'
+        env:
+          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+            <details><summary>Validation Output</summary>
 
-      - name: Verify AWS Authentication
-        run: aws sts get-caller-identity
+            \`\`\`\n
+            ${{ steps.validate.outputs.stdout }}
+            \`\`\`
 
-      - name: Terragrunt Init
-        run: |
-          terragrunt init --terragrunt-non-interactive --terragrunt-working-dir env/testing
+            </details>
 
-      - name: Terragrunt Plan
-        run: |
-          terragrunt plan --terragrunt-non-interactive --terragrunt-working-dir env/testing
+            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
 
-      - name: Terragrunt Apply
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.ACTION == 'apply'
-        run: |
-          terragrunt apply --terragrunt-non-interactive --terragrunt-working-dir env/testing
+            <details><summary>Show Plan</summary>
+
+            \`\`\`\n
+            ${process.env.PLAN}
+            \`\`\`
+
+            </details>
+
+            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
