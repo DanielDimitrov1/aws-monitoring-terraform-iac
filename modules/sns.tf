@@ -1,27 +1,32 @@
-resource "aws_sns_topic" "user_updates" {
-  name            = "user-updates-topic"
-  kms_master_key_id = aws_kms_key.sns_alarm.key_id
-  delivery_policy = <<EOF
-{
-  "http": {
-    "defaultHealthyRetryPolicy": {
-      "minDelayTarget": 20,
-      "maxDelayTarget": 20,
-      "numRetries": 3,
-      "numMaxDelayRetries": 0,
-      "numNoDelayRetries": 0,
-      "numMinDelayRetries": 0,
-      "backoffFunction": "linear"
-    },
-    "disableSubscriptionOverrides": false,
-    "defaultThrottlePolicy": {
-      "maxReceivesPerSecond": 1
-    }
-  }
+resource "aws_sns_topic" "alarm" {
+  name = "alaram"
+  delivery_policy = file("${path.module}/aws_sns_topic.delivery_policy.json")
 }
-EOF
-}
+data "aws_caller_identity" "current" {}
 
+resource "aws_kms_key" "sns_alarm" {
+  description = "This is a key for sns encryption"
+  policy = <<POLICY
+  {
+    "Version": "2012-10-17",
+    "Id": "key-default-1",
+    "Statement": [
+      {
+        "Sid": "EnableIAMUserPermissions",
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+          "Service": [
+            "cloudwatch.amazonaws.com"
+          ]
+        },
+        "Action": "kms:*",
+        "Resource": "*"
+      }
+    ]
+  }
+POLICY
+}
 resource "aws_kms_alias" "sns_key" {
     name = "alias/snskey"
     target_key_id = aws_kms_key.sns_alarm.key_id

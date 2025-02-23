@@ -13,7 +13,9 @@ resource "aws_cloudwatch_metric_alarm" "sqs-queue-delay" {
   alarm_actions = [aws_sns_topic.alarm.arn]
   ok_actions    = [aws_sns_topic.alarm.arn]
   treat_missing_data = "notBreaching"
-# queueName = each.value
+  dimensions = {
+    QueueName = each.value
+  }
 }
 
 # Here we can add more metric alarms, such as:
