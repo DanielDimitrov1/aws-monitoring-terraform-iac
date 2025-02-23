@@ -2,9 +2,62 @@
 
 ## Overview
 
-This repository showcases my expertise in **Terraform, Terragrunt**, and **AWS monitoring tools** by implementing automated monitoring solutions for AWS resources. It provides infrastructure-as-code (IaC) to deploy CloudWatch alarms and other monitoring configurations efficiently and consistently.
+This repository is designed for dynamically monitoring AWS infrastructure. It supports both Terraform and Terragrunt (an advanced approach to Infrastructure as Code (IaC) for managing multiple environments and accounts), requiring only minimal modifications to switch between them. 
 
-The current setup focuses on monitoring key AWS services using Terraform and Terragrunt, ensuring scalability, modularity, and maintainability. This is a simple way of implementing monitoring, but I can enhance it using **for_each loops, if statements, and other Terraform features** to provide more flexibility and customization as needed.
+I strongly recommend using Terragrunt because of its efficiency.
+
+Additionally, this repo includes a deployment pipeline for Bitbucket called [pipeline.yaml](https://github.com/DanielDimitrov1/Monitoring_AWS_Terrafrom/blob/main/pipeline.yaml), in addition to GitHub Actions, providing flexibility in CI/CD setup.
+
+
+The current setup focuses on monitoring key AWS services, ensuring scalability, modularity, and maintainability. This is a simple way of implementing monitoring, but I can enhance it using **for_each loops, if statements, and other Terraform features** to provide more flexibility and customization as needed.
+
+
+## Getting Started
+
+To utilize this repository effectively, follow these steps:
+
+### Clone this repo locally
+
+```sh
+git clone https://github.com/DanielDimitrov1/Monitoring_AWS_Terrafrom.git
+```
+
+### Create an S3 Bucket
+Set up your own S3 bucket to store the Terraform state (`tfstate`) file.
+
+### Set Load Balancer ARN
+Retrieve your Load Balancer ARN and store it in the repository's environment secrets as **ALB_ARN**.
+
+### IAM Identity Provider Configuration
+
+- Create a provider in IAM Identity Provider with the name: **token.actions.githubusercontent.com**.
+- **Set Audience**: `sts.amazonaws.com`.
+- **Type**: OpenID Connect.
+
+### IAM Role and Permissions
+
+- Create and assign an IAM role to the provider with all necessary permissions.
+- Reference predefined policies located in the `policies/` directory and modify them as needed based on your services and resources.
+
+### Configure AWS Region and Bucket Name
+
+- Store the AWS region as a secret variable under the key **AWS_REGION**.
+- Similarly, set the S3 bucket name in **AWS_BUCKET_NAME**.
+
+## Notes
+
+Some configuration files and examples are included to illustrate real-world use cases. However, certain resources and services may not be pre-configured since they depend on specific monitoring needs.
+
+## Support
+
+For any questions or further assistance, feel free to reach out.
+
+
+
+
+
+
+
 
 
 ## Features
