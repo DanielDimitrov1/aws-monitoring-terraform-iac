@@ -9,7 +9,7 @@ resource "aws_cloudwatch_metric_alarm" "lb_4xx_error" {
   statistic                 = "Average"
   threshold                 = "60"
 
-  alarm_description         = "This alarm will notify us when there is 1 or more unhealthy hosts."
+  alarm_description         = "This alarm will notify us when there is 1 or more unhealthy hosts.."
 
   alarm_actions = [aws_sns_topic.alarm.arn]
   ok_actions    = [aws_sns_topic.alarm.arn]
