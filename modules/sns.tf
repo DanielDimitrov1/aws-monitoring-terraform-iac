@@ -27,13 +27,22 @@ resource "aws_kms_key" "sns_alarm" {
   }
 POLICY
 }
-resource "aws_kms_alias" "sns_key" {
-    name = "alias/snskey"
-    target_key_id = aws_kms_key.sns_alarm.key_id
-    lifecycle {
-      ignore_changes = [target_key_id]
-    }
+data "aws_kms_alias" "existing_sns_key" {
+  name = "alias/snskey"
 }
+
+resource "aws_kms_alias" "sns_key" {
+  count         = length(data.aws_kms_alias.existing_sns_key.id) > 0 ? 0 : 1
+  name          = "alias/snskey"
+  target_key_id = aws_kms_key.sns_alarm.key_id
+}
+# resource "aws_kms_alias" "sns_key" {
+#     name = "alias/snskey"
+#     target_key_id = aws_kms_key.sns_alarm.key_id
+#     lifecycle {
+#       ignore_changes = [target_key_id]
+#     }
+# }
 
 # Here we can add more metric alarms, such as:
 # - ActiveConnections
