@@ -10,7 +10,7 @@ locals {
     alarm_dimensions = local.dimensions_map[local.thresholds.selected_dimensions]
     dimensions = local.dimensions_map[var.ecs_service_names == [] ? "cluster" : "service"]
 
-        alarm_names = toest ([
+        alarm_names = toset([
             "freeable_memory",
             "cpu_utilization_too_high",
             "cpu_credit_balance_too_low",
