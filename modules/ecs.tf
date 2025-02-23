@@ -6,6 +6,7 @@ locals {
         MemoryUtilizationHighThreshold = min(max(var.memory_utilization_high_threshold, 0), 100)
         BurstBalanceThreshold = min(max(var.burst_balance_threshold, 0), 100)
         FreeStorageSpaceThreshold =max(var.free_storage_space_threshold, 0)
+        selected_dimensions = var.ecs_service_names == [] ? "cluster" : "service"
     }
     alarm_dimensions = local.dimensions_map[local.thresholds.selected_dimensions]
     dimensions = local.dimensions_map[var.ecs_service_names == [] ? "cluster" : "service"]
