@@ -37,7 +37,7 @@ Retrieve your Load Balancer ARN and store it in the repository's environment sec
 ### IAM Role and Permissions
 
 - Create and assign an IAM role to the provider with all necessary permissions.
-- Reference predefined policies located in the `policies/` directory and modify them as needed based on your services and resources.
+- Reference predefined policies located in the [permisions](https://github.com/DanielDimitrov1/Monitoring_AWS_Terrafrom/tree/main/permissions) directory and modify them as needed based on your services and resources.
 
 ### Configure AWS Region and Bucket Name
 
