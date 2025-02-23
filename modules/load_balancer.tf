@@ -19,9 +19,9 @@ resource "aws_cloudwatch_metric_alarm" "lb_4xx_error" {
     LoadBalancer = "arn:aws:elasticloadbalancing:eu-west-1:277707138850:loadbalancer/app/main/f97903b029d2ff71"}
 }
 
-data "aws_lb" "main" {
-    name = var.main_alb
-}
+#data "aws_lb" "main" {
+#    name = var.main_alb
+#}
 # Here we can add more metric alarms, such as: 
 # - UnHealthyHostCount
 # - HealthyStateDNS
