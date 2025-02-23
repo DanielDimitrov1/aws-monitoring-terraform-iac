@@ -1,5 +1,3 @@
-data "aws_region" "current" {}
-
 resource "aws_cloudwatch_metric_alarm" "lb_4xx_error" {
   alarm_name                = "Healthy-Count"
   comparison_operator       = "LessThanOrEqualToThreshold"
