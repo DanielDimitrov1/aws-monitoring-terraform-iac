@@ -30,6 +30,10 @@ POLICY
 resource "aws_kms_alias" "sns_key" {
     name = "alias/snskey"
     target_key_id = aws_kms_key.sns_alarm.key_id
+    lifecycle {
+      ignore_changes = [ target_key_id ]
+      prevent_destroy = true
+    }
 }
 
 # Here we can add more metric alarms, such as:
