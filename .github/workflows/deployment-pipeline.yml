@@ -51,9 +51,9 @@ jobs:
           AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY_NAME }}
           ALB_ARN: ${{ secrets.ALB_ARN }}
         run: |
-          terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}" -backend-config="var=${ALB_ARN}"
-          terraform apply -var="alb_arn=$ALB_ARN" -auto-approve
-
+          terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}"
+          terraform apply -var="alb_arn=${ALB_ARN}" -auto-approve
+                          
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
