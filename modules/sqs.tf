@@ -1,4 +1,4 @@
-resource "aws_cloudwatch_metric_alarm" "cpu_utilization_higher_than_expected" {
+resource "aws_cloudwatch_metric_alarm" "sqs-queue-delay" {
   for_each                  = toset(var.sqs_names) 
   alarm_name                = "sqs-queue-delay-${each.value}"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
