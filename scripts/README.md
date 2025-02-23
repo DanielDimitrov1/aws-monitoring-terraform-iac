@@ -1,0 +1,1 @@
+This authentication method can be utilized when using Bitbucket as a version control and repository hosting service, or any similar technology. To implement this authentication approach, you need to properly configure your **AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and AWS_SESSION_TOKEN.**
