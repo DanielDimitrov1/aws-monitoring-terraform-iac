@@ -1,5 +1,4 @@
 data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
 
 resource "aws_cloudwatch_metric_alarm" "lb_4xx_error" {
   alarm_name                = "Healthy-Count"
