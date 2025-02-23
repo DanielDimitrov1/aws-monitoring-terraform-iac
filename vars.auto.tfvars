@@ -17,4 +17,4 @@ api_gateway_stage_name = "$default"
 sqs_names = [
     "first", "second", "third"
 ]
-main_alb = "daniel_alb"
+main_alb = "daniel-alb"
