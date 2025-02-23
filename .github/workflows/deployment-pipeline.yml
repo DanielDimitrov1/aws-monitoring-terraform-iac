@@ -50,7 +50,7 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
-      - name: Terraform Init
+      - name: Terraform Plan
         id: plan
         env:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
