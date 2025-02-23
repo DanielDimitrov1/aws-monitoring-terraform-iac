@@ -13,7 +13,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_higher_than_expected" {
   alarm_actions = [aws_sns_topic.alarm.arn]
   ok_actions    = [aws_sns_topic.alarm.arn]
   treat_missing_data = "notBreaching"
-  QueueName = each.value
+# queueName = each.value
 }
 
 # Here we can add more metric alarms, such as:

@@ -1,5 +1,5 @@
 
-resource "aws_cloudwatch_metric_alarm" "apigateway_4xx_error" {
+resource "aws_cloudwatch_metric_alarm" "lb_4xx_error" {
   alarm_name                = "Healthy-Count"
   comparison_operator       = "LessThanOrEqualToThreshold"
   evaluation_periods        = 1
