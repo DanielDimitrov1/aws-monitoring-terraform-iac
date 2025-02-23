@@ -52,8 +52,8 @@ jobs:
           ALB_ARN: ${{ secrets.ALB_ARN }}
         run: |
           terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" -backend-config="key=${AWS_BUCKET_KEY_NAME}" -backend-config="region=${AWS_REGION}"
-          terraform apply -var="alb_arn=${ALB_ARN}" -auto-approve
-                          
+
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -68,4 +68,4 @@ jobs:
         run: terraform plan 
 
       - name: Terraform Apply
-        run: terraform apply -var="alb_arn=$ALB_ARN" -auto-approve
+        run: terraform apply 
