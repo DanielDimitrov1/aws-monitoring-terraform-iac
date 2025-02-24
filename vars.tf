@@ -9,4 +9,3 @@ variable "ecs_service_names" {}
 variable "api_gateway_stage_name" {}
 variable "main_alb" {}
 variable "sqs_names" {}
-#variable "alb_arn" {}

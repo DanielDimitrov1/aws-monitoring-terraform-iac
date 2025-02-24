@@ -36,5 +36,3 @@ variable "rds_identifier" {}  #see in var.auto.tfvars file
 variable "api_gateway_stage_name" {}
 variable "main_alb" {}
 variable "sqs_names" {}
-
-variable "alb_arn" {}
