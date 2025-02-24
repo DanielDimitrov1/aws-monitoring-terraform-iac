@@ -37,8 +37,4 @@ variable "api_gateway_stage_name" {}
 variable "main_alb" {}
 variable "sqs_names" {}
 
-variable "alb_arn" {
-  description = "ARN of the ALB"
-  default     = "arn:aws:elasticloadbalancing:eu-west-1:277707138850:loadbalancer/app/main/f97903b029d2ff71"
-  sensitive   = true
-}
+variable "alb_arn" {}
