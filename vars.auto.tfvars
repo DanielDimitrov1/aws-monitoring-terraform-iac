@@ -18,3 +18,4 @@ sqs_names = [
     "first", "second", "third"
 ]
 main_alb = "daniel-alb"
+#alb_arn = "arn:aws:elasticloadbalancing:eu-west-1:277707138850:loadbalancer/app/main/f97903b029d2ff71"

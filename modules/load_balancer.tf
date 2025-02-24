@@ -15,7 +15,7 @@ resource "aws_cloudwatch_metric_alarm" "lb_4xx_error" {
 
   treat_missing_data = "notBreaching"
   dimensions = {
-    LoadBalancer = var.alb_arn
+    LoadBalancer = "arn:aws:elasticloadbalancing:eu-west-1:277707138850:loadbalancer/app/main/f97903b029d2ff71"
     }
 }
 
