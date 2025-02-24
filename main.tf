@@ -9,4 +9,5 @@ module "modules" {
   main_alb =  var.main_alb
   api_gateway_stage_name = var.api_gateway_stage_name
   sqs_names = var.sqs_names
+  alb_arn = var.alb_arn
 }
