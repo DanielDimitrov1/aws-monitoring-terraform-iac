@@ -30,7 +30,7 @@ git clone https://github.com/DanielDimitrov1/Monitoring_AWS_Terrafrom.git
 Set up your own S3 bucket to store the Terraform state (`tfstate`) file.
 
 ### Set Load Balancer ARN
-Retrieve your Load Balancer ARN and store it in the repository's environment secrets as **ALB_ARN**.
+Retrieve your Load Balancer name and declare it in the data resource for calling it [ALB NAME](https://github.com/DanielDimitrov1/Monitoring_AWS_Terrafrom/blob/main/modules/load_balancer.tf)  ***(line 23)***.
 
 ### IAM Identity Provider Configuration
 
