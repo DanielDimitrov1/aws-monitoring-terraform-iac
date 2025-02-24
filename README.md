@@ -116,13 +116,3 @@ Beyond the listed metrics, I can extend monitoring configurations to cover addit
 **Cost Optimization:** Detects inefficient resource usage and potential cost savings.
 
 **Security & Compliance:** Monitors unauthorized access attempts and suspicious activities.
-
-
-
-# About Me
-
-I am passionate about **Infrastructure as Code, AWS, and cloud monitoring**. This repository demonstrates my ability to implement **scalable, modular, and efficient AWS monitoring solutions** using **Terraform and Terragrunt.**
-
-If you're interested in similar implementations or need custom AWS monitoring solutions, feel free to reach out!
-
-**✅ Let’s make cloud monitoring simple, automated, and efficient!**
