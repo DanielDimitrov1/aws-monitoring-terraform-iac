@@ -23,7 +23,7 @@ To utilize this repository effectively, follow these steps:
 ### Clone this repo locally
 
 ```sh
-git clone https://github.com/DanielDimitrov1/Monitoring_AWS_Terrafrom.git
+git clone https://github.com/DanielDimitrov1/aws-monitoring-terraform-iac.git
 ```
 
 ### Create an S3 Bucket
