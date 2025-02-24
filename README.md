@@ -50,8 +50,8 @@ Retrieve your Load Balancer name and declare it in the data resource for calling
 
 ### Notes:          ***Some configuration files and examples are included to illustrate real-world use cases. However, certain resources and services may not be pre-configured since they depend on specific monitoring needs.***
 
-### Support:        ***For any questions or further assistance, feel free to reach out.***
-
+### Support:   
+<span style="color:blue">For any questions or further assistance, feel free to reach out.</span>
 
 
 
