@@ -7,11 +7,16 @@ resource "aws_cloudwatch_metric_alarm" "lb_4xx_error" {
   period                    = "60"
   statistic                 = "Average"
   threshold                 = "60"
+
   alarm_description         = "This alarm will notify us when there is 1 or more unhealthy hosts."
+
   alarm_actions = [aws_sns_topic.alarm.arn]
   ok_actions    = [aws_sns_topic.alarm.arn]
+
   treat_missing_data = "notBreaching"
-  dimensions = "arn:aws:elasticloadbalancing:eu-west-1:277707138850:loadbalancer/app/main/f97903b029d2ff71"
+  dimensions = {
+    LoadBalancer = "arn:aws:elasticloadbalancing:eu-west-1:277707138850:loadbalancer/app/main/f97903b029d2ff71"}
+#    "arn:aws:elasticloadbalancing:${data.aws_region_current_n}:${data.aws_caller_identity.current.account_id}:loadbalancer/app/main/f97903b029d2ff71"
 
 }
 
