@@ -35,16 +35,6 @@ jobs:
           terraform_version: 1.10.5
           terraform_wrapper: false
 
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3 python3-pip jq
-          pip3 install --upgrade pip
-          pip3 install --no-cache-dir awscli
-          wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.53.2/terragrunt_linux_amd64
-          mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
-          chmod +x /usr/local/bin/terragrunt
-
       - name: Terraform Init
         env:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
